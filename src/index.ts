@@ -2,6 +2,9 @@ import fs from 'fs'
 import readline from 'readline'
 import { insertPuzzle } from './db';
 
+import dotenv from 'dotenv'
+dotenv.config()
+
 const processFile = async ({
   cb,
   skipFirst = true,
@@ -10,16 +13,18 @@ const processFile = async ({
   cb: (s: string) => Promise<any>
   skipFirst?: boolean
   filePath: string
-}): Promise<string[]> => {
+}): Promise<void> => {
   let lines: string[] = []
   const rl = readline.createInterface({
     input: fs.createReadStream(filePath),
   });
-
+  let index = 0
   for await (const line of rl) {
-    lines.push(line)
+    if (index === 0 && skipFirst === true) {
+      continue
+    }
+    await cb(line)
   }
-  return lines.slice(skipFirst ? 1 : 0)
 }
 
 ;(async () => {
