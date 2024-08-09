@@ -20,7 +20,8 @@ const processFile = async ({
   });
   let index = 0
   for await (const line of rl) {
-    if (index === 0 && skipFirst === true) {
+    // this sucks
+    if (index++ === 0 && skipFirst === true) {
       continue
     }
     await cb(line)
