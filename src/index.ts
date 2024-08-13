@@ -14,7 +14,6 @@ const processFile = async ({
   skipFirst?: boolean
   filePath: string
 }): Promise<void> => {
-  let lines: string[] = []
   const rl = readline.createInterface({
     input: fs.createReadStream(filePath),
   });
